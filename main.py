@@ -32,9 +32,36 @@ def hailstone(n):
         print(n)
     return i
 
-def main():
-    a = hailstone(10)
-    print(a)
-    print(hailstone(1))
+def product(n, term):
+    """Return the product of the first n terms in a sequence.
 
+    n: a positive integer
+    term:  a function that takes one argument to produce the term
+
+    >>> product(3, identity)  # 1 * 2 * 3
+    6
+    >>> product(5, identity)  # 1 * 2 * 3 * 4 * 5
+    120
+    >>> product(3, square)    # 1^2 * 2^2 * 3^2
+    36
+    >>> product(5, square)    # 1^2 * 2^2 * 3^2 * 4^2 * 5^2
+    14400
+    >>> product(3, increment) # (1+1) * (2+1) * (3+1)
+    24
+    >>> product(3, triple)    # 1*3 * 2*3 * 3*3
+    162
+    """
+    p = 1
+    for i in range(1,n+1):
+        p *= term(i)
+    return p
+
+
+def main():
+    identity = lambda x : x
+    square = lambda x : x**2
+    triple = lambda x : x**3
+    print(product(5, identity))
+    print(product(3, square))
+    print(product(3, triple))
 main()
