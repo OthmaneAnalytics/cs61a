@@ -108,11 +108,35 @@ def product_using_accumulate(n, term):
     """
     return accumulate(mul, 1, n, term)
 
+def compose(g,f):
+    def r_fct(x):
+        return g(f(x))
+    return r_fct
+
+
+def make_repeater(f, n):
+    """Returns the function that computes the nth application of f.
+
+    >>> add_three = make_repeater(increment, 3)
+    >>> add_three(5)
+    8
+    >>> make_repeater(triple, 5)(1) # 3 * (3 * (3 * (3 * (3 * 1))))
+    243
+    >>> make_repeater(square, 2)(5) # square(square(5))
+    625
+    >>> make_repeater(square, 3)(5) # square(square(square(5)))
+    390625
+    """
+    g = f
+    for i in range(n-1):
+        g = compose(g,f)
+    return g
+
 def main():
     identity = lambda x : x
     square = lambda x : x**2
     triple = lambda x : x**3
-    print(summation_using_accumulate(5, triple))
-    print(product_using_accumulate(4, square))
-    print(accumulate(lambda x, y: x + y + 1, 2, 3, square))
+    print(make_repeater(triple, 5)(1))
+    print(make_repeater(square, 2)(5))
+    print(make_repeater(square, 3)(5))
 main()
