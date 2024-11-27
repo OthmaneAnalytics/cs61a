@@ -20,10 +20,21 @@ def largest_factor(n):
             x = i
     return x
 
+def hailstone(n):
+    i = 1
+    print(n)
+    while n > 1:
+        i += 1
+        if n % 2 == 0:
+            n = n//2
+        else:
+            n = 3*n + 1
+        print(n)
+    return i
+
 def main():
-    print(largest_factor(15))
-    print(largest_factor(80))
-    print(largest_factor(13))
-    print(two_of_three(5, 5, 5))
+    a = hailstone(10)
+    print(a)
+    print(hailstone(1))
 
 main()
