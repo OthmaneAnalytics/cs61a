@@ -11,24 +11,19 @@ def a_plus_abs_b(a,b):
     return f(a,b)
 
 def two_of_three(i, j, k):
-    """Return m*m + n*n, where m and n are the two smallest members of the
-    positive numbers i, j, and k.
+   return i**2 + j**2 + k**2 - max(i,j,k)**2 
 
-    >>> two_of_three(1, 2, 3)
-    5
-    >>> two_of_three(5, 3, 1)
-    10
-    >>> two_of_three(10, 2, 8)
-    68
-    >>> two_of_three(5, 5, 5)
-    50
-    """
-    return i**2 + j**2 + k**2 - max(i,j,k)**2 
+
+def largest_factor(n):
+    for i in range(1,n):
+        if n % i == 0:
+            x = i
+    return x
 
 def main():
-    print(two_of_three(1, 2, 3))
-    print(two_of_three(5, 3, 1))
-    print(two_of_three(10, 2, 8))
+    print(largest_factor(15))
+    print(largest_factor(80))
+    print(largest_factor(13))
     print(two_of_three(5, 5, 5))
 
 main()
