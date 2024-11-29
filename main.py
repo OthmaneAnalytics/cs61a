@@ -186,9 +186,37 @@ def digit_distance(n):
         return 0
     return abs((n % 10) - ((n//10)% 10) ) +  digit_distance(n//10)
 
+def interleaved_sum(n, odd_func, even_func):
+    """Compute the sum odd_func(1) + even_func(2) + odd_func(3) + ..., up
+    to n.
+
+    >>> identity = lambda x: x
+    >>> square = lambda x: x * x
+    >>> triple = lambda x: x * 3
+    >>> interleaved_sum(5, identity, square) # 1   + 2*2 + 3   + 4*4 + 5
+    29
+    >>> interleaved_sum(5, square, identity) # 1*1 + 2   + 3*3 + 4   + 5*5
+    41
+    >>> interleaved_sum(4, triple, square)   # 1*3 + 2*2 + 3*3 + 4*4
+    32
+    >>> interleaved_sum(4, square, triple)   # 1*1 + 2*3 + 3*3 + 4*3
+    28
+    >>> from construct_check import check
+    >>> check(HW_SOURCE_FILE, 'interleaved_sum', ['While', 'For', 'Mod']) # ban loops and %
+    True
+    >>> check(HW_SOURCE_FILE, 'interleaved_sum', ['BitAnd', 'BitOr', 'BitXor']) # ban bitwise operators, don't worry about these if you don't know what they are
+    True
+    """
+    if n == 1:
+        return odd_func(1)
+    return odd_func(n) + interleaved_sum(n - 1 , even_func,odd_func)
+
 
 def main():
-    print(digit_distance(3))
-    print(digit_distance(777))
-    print(digit_distance(3464660003))
+    identity = lambda x: x
+    square = lambda x: x * x
+    triple = lambda x: x * 3
+    print(interleaved_sum(5, identity, square))
+    print(interleaved_sum(5, square, identity))
+    print(interleaved_sum(4, triple, square))
 main()
