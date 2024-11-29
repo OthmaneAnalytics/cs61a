@@ -163,7 +163,32 @@ def num_eights(n):
     else:
         return  x + num_eights(n // 10)
 
+def digit_distance(n):
+    """Determines the digit distance of n.
+
+    >>> digit_distance(3)
+    0
+    >>> digit_distance(777) # 0 + 0
+    0
+    >>> digit_distance(314) # 2 + 3
+    5
+    >>> digit_distance(31415926535) # 2 + 3 + 3 + 4 + ... + 2
+    32
+    >>> digit_distance(3464660003)  # 1 + 2 + 2 + 2 + ... + 3
+    16
+    >>> from construct_check import check
+    >>> # ban all loops
+    >>> check(HW_SOURCE_FILE, 'digit_distance',
+    ...       ['For', 'While'])
+    True
+    """
+    if n < 10:
+        return 0
+    return abs((n % 10) - ((n//10)% 10) ) +  digit_distance(n//10)
+
 
 def main():
-    print(num_eights(388))
+    print(digit_distance(3))
+    print(digit_distance(777))
+    print(digit_distance(3464660003))
 main()
